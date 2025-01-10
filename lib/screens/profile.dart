@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../components/floating-bottom-nav.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }

@@ -5,6 +5,7 @@ import 'screens/registration.dart';
 import 'screens/login.dart';
 import 'screens/profile.dart';
 import 'components/floating-bottom-nav.dart';
+import 'screens/cart.dart';
 import 'dart:async';
 
 void main() {
@@ -33,6 +34,8 @@ class MyApp extends StatelessWidget {
             return createRoute(const RegistrationScreen());
           case '/profile':
             return createRoute(ProfilePage());
+          case '/cart':
+            return createRoute(CartPage());
           default:
             return null;
         }
