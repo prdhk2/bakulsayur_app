@@ -1,16 +1,8 @@
 # bakulsayur_app
 
-A new Flutter project.
+Aplikasi penjualan sayur, aplikasi ini di buat untuk materi presentasi kelompok Mata Kuliah Mobile Programming.
+Yang beranggotakan :
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Pradhika Setyawan (19225088)
+2. Rifki Adi Nugroho (19225111)
+3. Naufal Adi Pratama (19225263)
