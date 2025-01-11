@@ -39,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
         color: Colors.blue[100],
         shape: BoxShape.circle,
       ),
-      child: Icon(icon, color: Colors.blue[800]),
+      child: Icon(icon, color: Colors.white),
     );
   }
 

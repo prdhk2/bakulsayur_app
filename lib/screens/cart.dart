@@ -1,4 +1,48 @@
 import 'package:flutter/material.dart';
+import '../components/floating-bottom-nav.dart';
+
+class FloatingBottomNavCheckout extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onTap;
+  final List<BottomNavigationBarItem> items;
+
+  const FloatingBottomNavCheckout({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+    required this.items,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(30.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10.0,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30.0),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: currentIndex,
+          onTap: onTap,
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.blue[400],
+          items: items,
+        ),
+      ),
+    );
+  }
+}
 
 class CartPage extends StatefulWidget {
   @override
@@ -6,10 +50,12 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  int _currentPageNav = 2;
+
   List<CartItem> cartItems = [
-    CartItem(name: 'Apple', price: 2.5, quantity: 1),
-    CartItem(name: 'Banana', price: 1.5, quantity: 2),
-    CartItem(name: 'Orange', price: 3.0, quantity: 1),
+    CartItem(name: 'Sayur A', price: 2.5, quantity: 1),
+    CartItem(name: 'Sayur B', price: 1.5, quantity: 2),
+    CartItem(name: 'Sayur C', price: 3.0, quantity: 1),
   ];
 
   double get totalPrice =>
@@ -35,21 +81,96 @@ class _CartPageState extends State<CartPage> {
     });
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentPageNav = index;
+    });
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/home');
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/favorite');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/cart');
+        break;
+      case 3:
+        Navigator.pushReplacementNamed(context, '/profile');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('My Cart'),
-        backgroundColor: Colors.deepPurple,
       ),
-      body: cartItems.isEmpty
-          ? Center(
-              child: Text('Your cart is empty', style: TextStyle(fontSize: 18)),
-            )
-          : Column(
+      body: Column(
+        children: [
+          Container(
+            height: 120,
+            margin: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(16.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 6.0,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Icon(Icons.location_on, color: Colors.white),
+                SizedBox(width: 10),
                 Expanded(
-                  child: ListView.builder(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '1234 Purworejo, Jawa Tengah',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        'Desa Koi koi, RT 03 / RW 04, Banyu Suargo',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Change',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: cartItems.isEmpty
+                ? Center(
+                    child: Text('Your cart is empty',
+                        style: TextStyle(fontSize: 18)),
+                  )
+                : ListView.builder(
                     itemCount: cartItems.length,
                     itemBuilder: (context, index) {
                       return Card(
@@ -57,7 +178,7 @@ class _CartPageState extends State<CartPage> {
                             EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: ListTile(
                           leading: CircleAvatar(
-                            backgroundColor: Colors.deepPurpleAccent,
+                            backgroundColor: Colors.blue[100],
                             child: Text(
                               cartItems[index].name[0],
                               style: TextStyle(color: Colors.white),
@@ -92,53 +213,21 @@ class _CartPageState extends State<CartPage> {
                       );
                     },
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        offset: Offset(0, -1),
-                        blurRadius: 4,
-                      )
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Total: \$${totalPrice.toStringAsFixed(2)}',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.deepPurple,
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 30, vertical: 15),
-                        ),
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Checkout successful!'),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Checkout',
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: FloatingBottomNav(
+        currentIndex: _currentPageNav,
+        onTap: _onItemTapped,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: 'Favorite'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart), label: 'Cart'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+      ),
     );
   }
 }

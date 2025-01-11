@@ -117,6 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
         MaterialPageRoute(builder: (context) => ProfilePage()),
       );
     }
+    if (index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CartPage()),
+      );
+    }
   }
 
   @override
